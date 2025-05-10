@@ -4,16 +4,15 @@ import os
 
 st.title("🎵 YouTube Audio Downloader")
 
-# Input for number of songs
-count = st.number_input("How many YouTube audio downloads?", min_value=1, step=1)
+count = st.number_input("How many songs?", min_value=1, step=1)
 
 urls = []
-for i in range(1, count + 1):
-    url = st.text_input(f"Enter Link {i}")
+for i in range(count):
+    url = st.text_input(f"Enter Link {i+1}")
     if url:
         urls.append(url)
 
-if st.button("Download All"):
+if st.button("Download"):
     if len(urls) != count:
         st.warning("Please fill all the URLs.")
     else:
@@ -22,7 +21,7 @@ if st.button("Download All"):
             'outtmpl': '%(title)s.%(ext)s',
             'noplaylist': True,
             'quiet': False,
-            'postprocessors': []
+            'postprocessors': []  # No ffmpeg
         }
 
         with st.spinner("Downloading... Please wait. This may take some time."):
@@ -33,4 +32,4 @@ if st.button("Download All"):
                     except Exception as e:
                         st.error(f"Error downloading {url}: {e}")
 
-        st.success("Download complete!")
+        st.success("✅ Download complete!")
