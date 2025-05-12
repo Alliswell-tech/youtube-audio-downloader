@@ -26,7 +26,7 @@ if st.button("Download"):
             }
         else:
             ydl_opts = {
-                'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
+                'format': 'mp4',
                 'outtmpl': '%(title)s.%(ext)s',
                 'noplaylist': True,
                 'quiet': False
@@ -50,7 +50,7 @@ if st.button("Download"):
         for file in downloaded_files:
             with open(file, "rb") as f:
                 st.download_button(
-                    label=f"⬇️ Save '{file}' to Device",
+                    label=f"⬇️ Download {file}",
                     data=f,
                     file_name=file,
                     mime="audio/mp3" if format_choice == "mp3/audio" else "video/mp4"
