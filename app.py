@@ -11,14 +11,6 @@ urls = [line.strip() for line in url.splitlines() if line.strip()]
 # Choose format
 format_choice = st.selectbox("Select format to download", ("mp3/audio", "mp4/video"))
 
-# Only show quality dropdown if MP4 is selected
-selected_quality = None
-if format_choice == "mp4/video":
-    selected_quality = st.selectbox(
-        "Select preferred video quality",
-        ("1080p", "720p", "480p", "360p")
-    )
-
 if st.button("Download"):
     if not urls:
         st.warning("Please enter at least one YouTube URL.")
@@ -33,16 +25,8 @@ if st.button("Download"):
                 'postprocessors': []
             }
         else:
-            # Map selected quality to yt-dlp format string
-            quality_map = {
-                "1080p": "bestvideo[height>=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
-                "720p": "bestvideo[height>=720][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
-                "480p": "bestvideo[height>=480][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
-                "360p": "bestvideo[height>=360][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]"
-            }
-
             ydl_opts = {
-                'format': quality_map[selected_quality],
+                'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
                 'outtmpl': '%(title)s.%(ext)s',
                 'noplaylist': True,
                 'quiet': False
